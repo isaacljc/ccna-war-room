@@ -104,6 +104,50 @@ Layer 2 = MAC / switching
 Layer 3 = IP / routing
 Layer 4 = TCP / UDP
 Layer 7 = applications`,
+
+modules: [
+  {
+    icon: "🎯",
+    title: "What You Must Understand",
+    content: [
+      { type: "p", text: "Day 1 is about understanding how network communication is layered. Do not memorize blindly. Learn what each layer is responsible for." },
+      { type: "list", items: [
+        "OSI model = troubleshooting map",
+        "TCP/IP model = practical internet model",
+        "Encapsulation = data being wrapped as it moves down the stack",
+        "Each layer has a specific job"
+      ]}
+    ]
+  },
+  {
+    icon: "📦",
+    title: "Encapsulation Flow",
+    content: [
+      { type: "flow", items: [
+        { title: "Data", desc: "Application data created by the user or program." },
+        { title: "Segment", desc: "Transport layer adds TCP/UDP information." },
+        { title: "Packet", desc: "Network layer adds IP addressing." },
+        { title: "Frame", desc: "Data-link layer adds MAC addressing." },
+        { title: "Bits", desc: "Physical layer sends signals across cable, fiber, or wireless." }
+      ]},
+      { type: "callout", kind: "success", text: "Exam shortcut: Data → Segment → Packet → Frame → Bits." }
+    ]
+  },
+  {
+    icon: "🧠",
+    title: "Exam Traps",
+    content: [
+      { type: "list", items: [
+        "Switching is Layer 2.",
+        "Routing is Layer 3.",
+        "TCP and UDP are Layer 4.",
+        "Ping uses ICMP, not TCP or UDP.",
+        "DNS failure does not always mean internet failure."
+      ]}
+    ]
+  }
+],
+
   commands: [
     "ping <ip>                       // test reachability using ICMP",
     "tracert <ip>                    // Windows: show path to destination",
@@ -149,6 +193,7 @@ flashcards: [
   { front: "TCP/IP Internet Layer", back: "Equivalent to OSI Layer 3" },
   { front: "TCP/IP Network Access", back: "Equivalent to OSI Layers 1–2" }
 ]
+
 },
 
 {
@@ -254,6 +299,42 @@ Switch = MAC table
 ARP = IP to MAC
 Broadcast MAC = FF:FF:FF:FF:FF:FF
 Unknown unicast = flood`,
+
+modules: [
+  {
+    icon: "🎯",
+    title: "LAN Communication",
+    content: [
+      { type: "p", text: "Inside a LAN, devices use MAC addresses for local delivery. IP addresses identify the destination logically, but Ethernet frames need MAC addresses to move across the local network." }
+    ]
+  },
+  {
+    icon: "🔁",
+    title: "ARP Process",
+    content: [
+      { type: "flow", items: [
+        { title: "PC knows destination IP", desc: "Example: PC1 wants to reach 192.168.1.20." },
+        { title: "PC does not know MAC", desc: "It cannot build the Ethernet frame yet." },
+        { title: "ARP Request", desc: "Broadcast: Who has 192.168.1.20?" },
+        { title: "ARP Reply", desc: "Target replies with its MAC address." },
+        { title: "Frame Sent", desc: "PC now sends the Ethernet frame to the correct MAC." }
+      ]}
+    ]
+  },
+  {
+    icon: "⚠️",
+    title: "Exam Traps",
+    content: [
+      { type: "list", items: [
+        "Switches learn from source MAC, not destination MAC.",
+        "Unknown unicast is flooded.",
+        "Broadcast stays inside the VLAN.",
+        "ARP is IPv4 only.",
+        "MAC table and ARP table are different."
+      ]}
+    ]
+  }
+],
   commands: [
     "show mac address-table              // view learned MAC addresses on switch",
     "show arp                            // view IP-to-MAC mappings",
@@ -352,6 +433,35 @@ They are same subnet. No router needed.
 PC1: 192.168.1.10/24
 PC2: 192.168.2.20/24
 Different subnet. Router needed.`,
+modules: [
+  {
+    icon: "🎯",
+    title: "IPv4 Addressing Purpose",
+    content: [
+      { type: "p", text: "IPv4 is a Layer 3 logical address. It tells devices which network a host belongs to and whether traffic is local or must go to a gateway." }
+    ]
+  },
+  {
+    icon: "🧩",
+    title: "Same Subnet vs Different Subnet",
+    content: [
+      { type: "flow", items: [
+        { title: "Same subnet", desc: "PC sends directly to the other host using ARP." },
+        { title: "Different subnet", desc: "PC sends traffic to the default gateway." },
+        { title: "No gateway", desc: "Remote network communication fails." }
+      ]},
+      { type: "callout", kind: "danger", text: "Exam trap: wrong subnet mask can make a local host look remote, or a remote host look local." }
+    ]
+  },
+  {
+    icon: "🧪",
+    title: "Scenario Training",
+    content: [
+      { type: "p", text: "PC1 is 192.168.1.10/24. PC2 is 192.168.2.20/24. They are on the same switch but cannot ping." },
+      { type: "callout", text: "Answer: They are in different IP networks. A router or Layer 3 gateway is required." }
+    ]
+  }
+],
   commands: [
     "ipconfig                         // Windows: view IP address, mask, gateway",
     "ipconfig /all                    // Windows: view full IP, MAC, DNS info",
